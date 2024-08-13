@@ -9,5 +9,5 @@ jobs:
           #need to configure github token and save it to secrets ( secret need to have read on repos )
           github-token: ${{ secrets.MY_PAT }}
           script: |
-            const script = require('./.github/workflows/scripts/api.js')
+            const script = require('./.github/workflows/scripts/report.js')
             await script({github, context, core})
