@@ -1,0 +1,13 @@
+on: push
+jobs:
+  echo-input:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/github-script@v7
+        with:
+          #need to configure github token and save it to secrets ( secret need to have read on repos )
+          github-token: ${{ secrets.MY_PAT }}
+          script: |
+            const script = require('./.github/workflows/scripts/api.js')
+            await script({github, context, core})
