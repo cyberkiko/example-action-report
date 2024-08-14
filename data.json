@@ -1,0 +1,1 @@
+[{"repo":"test-site1","dependencies":{"compA":"1.2","compB":"22","compC":"1"}},{"repo":"test-site2","dependencies":{"compA":"1.2","compB":"22.2","compC":"2"}},{"repo":"test-site3","dependencies":{"compA":"1.2","compB":"22","compC":"1"}},{"repo":"test-site4","dependencies":{"compA":"1","compB":"22"}}]
