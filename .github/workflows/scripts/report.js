@@ -16,6 +16,12 @@ module.exports = async ({github, context, core}) => {
     return JSON.parse(json);
   }
 
+  function encodeToBase64(content) {
+    const encodedString = Buffer.from(content).toString('base64')
+
+    return encodedString
+  }
+
   // reduce repo dependencies based on required ones"
   function parseDependencies(dependenciesList) {
     // custom list
@@ -48,6 +54,16 @@ module.exports = async ({github, context, core}) => {
     return parseDependencies(fileJson.dependencies)
   }
 
+  async function addFile(repo, filepath, fileBase64Content) {
+    const file = await github.rest.repos.createOrUpdateFileContents({
+      owner: context.repo.owner,
+      repo: repo,
+      path: filepath,
+      message: 'Updated content',
+      content: fileBase64Content,
+    })
+  }
+
 
   // main return json object with sites and depdendencies versions
 
@@ -66,6 +82,10 @@ module.exports = async ({github, context, core}) => {
   
 
   console.log(exportJson)
+
+  const encodedObject = encodeToBase64(JSON.stringify(exportJson))
+
+  addFile('report-test', 'data.json', encodedObject)
 
   // can do here another github call to export this to file. 
 
