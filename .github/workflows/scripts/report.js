@@ -54,13 +54,23 @@ module.exports = async ({github, context, core}) => {
     return parseDependencies(fileJson.dependencies)
   }
 
-  async function addFile(repo, filepath, fileBase64Content) {
+  async function getFile(repo, filepath) {
+    const file = await github.rest.repos.getContent({
+        owner: context.repo.owner,
+        repo: repo,
+        path: filepath
+    })
+
+    return file
+  }
+  async function addFile(repo, filepath, fileBase64Content, sha = '') {
     const file = await github.rest.repos.createOrUpdateFileContents({
       owner: context.repo.owner,
       repo: repo,
       path: filepath,
       message: 'Updated content',
       content: fileBase64Content,
+      sha: sha
     })
   }
 
@@ -84,10 +94,21 @@ module.exports = async ({github, context, core}) => {
   console.log(exportJson)
 
   const encodedObject = encodeToBase64(JSON.stringify(exportJson))
+  let file
+  let fileSha = ''
+  try {
+    file = await getFile('report-test', 'data.json')
+  } catch (e) {
+    // log file
+  }
 
-  addFile('report-test', 'data.json', encodedObject)
+  if (typeof file !== 'undefined') {
+    fileSha = file.data.sha
+  }
 
-  // can do here another github call to export this to file.
-  
+  // const fileSha = file.data.sha
+  addFile('report-test', 'data.json', encodedObject, fileSha)
+
+  // can do here another github call to export this to file. 
 
 }
