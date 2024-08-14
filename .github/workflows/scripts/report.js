@@ -97,7 +97,7 @@ module.exports = async ({github, context, core}) => {
   let file
   let fileSha = ''
   try {
-    file = await getFile('report-test', 'data.json')
+    file = await getFile('example-action-report', 'data.json')
   } catch (e) {
     // log file
   }
