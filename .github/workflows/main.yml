@@ -1,4 +1,6 @@
-on: push
+name: components-versions
+on: 
+  workflow_dispatch:
 jobs:
   repo-component-dependencies:
     runs-on: ubuntu-latest
