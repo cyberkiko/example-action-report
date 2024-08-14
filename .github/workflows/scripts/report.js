@@ -107,7 +107,7 @@ module.exports = async ({github, context, core}) => {
   }
 
   // const fileSha = file.data.sha
-  addFile('report-test', 'data.json', encodedObject, fileSha)
+  addFile('example-action-report', 'data.json', encodedObject, fileSha)
 
   // can do here another github call to export this to file. 
 
